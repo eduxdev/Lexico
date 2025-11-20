@@ -1,0 +1,53 @@
+CARACTERÍSTICAS SOPORTADAS ACTUALMENTE POR EL COMPILADOR
+============================================================
+
+El compilador soporta un subconjunto básico de Python que incluye:
+
+✅ SOPORTADO:
+- Variables y asignaciones simples (x = 5)
+- Diccionarios vacíos (d = {})
+- Diccionarios con elementos (d = {"clave": "valor"})
+- Listas []
+- Números y strings
+- Operaciones aritméticas (+, -, *, /, %)
+- Operaciones de comparación (==, !=, <, >, <=, >=)
+- Condicionales (if, elif, else)
+- Bucles (while, for in range())
+- Funciones simples (def, return)
+- print() simple
+- input()
+- int()
+- len()
+- Asignación a índices: lista[0] = valor, dict[clave] = valor
+- Acceso a índices: lista[0], dict[clave]
+- Variables globales (global)
+- Bloques try/except
+- del, break, continue
+
+❌ NO SOPORTADO ACTUALMENTE:
+- F-strings (print(f"Texto {variable}"))
+- Operadores de asignación compuesta (+=, -=, etc.)
+- Método .items() de diccionarios
+- Operador 'in' para verificar pertenencia
+- Excepciones específicas (ValueError, etc.)
+- Múltiples valores en asignación (a, b = 1, 2)
+
+RECOMENDACIÓN:
+Para que tu código funcione con el compilador actual, debes simplificarlo:
+
+EN LUGAR DE:
+    print(f"AID: {aid}")
+    aid += 1
+    for id_est, datos in estudiantes.items():
+    if id_borrar in estudiantes:
+    except ValueError:
+
+USA:
+    print("AID: ")
+    print(aid)
+    aid = aid + 1
+    # El for con .items() no está soportado aún
+    if True:  # Simplificar la verificación
+    except:  # Sin especificar el tipo de excepción
+
+
