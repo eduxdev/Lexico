@@ -1,0 +1,147 @@
+ABSTRACT SYNTAX TREE (AST)
+====================================================================================================
+
+ProgramNode
+  statements:
+    FunctionNode
+      name: factorial
+      params:
+        str
+      body:
+        BlockNode
+          statements:
+            IfNode
+              condition:
+                BinaryOpNode
+                  left:
+                    IdentifierNode
+                      name: n
+                      line: 6
+                  operator: ==
+                  right:
+                    NumberNode
+                      value: 0
+                      line: 6
+                  line: 6
+              then_block:
+                BlockNode
+                  statements:
+                    ReturnNode
+                      expression:
+                        NumberNode
+                          value: 1
+                          line: 7
+                      line: 7
+              else_block:
+                BlockNode
+                  statements:
+                    AssignmentNode
+                      identifier: temp
+                      expression:
+                        BinaryOpNode
+                          left:
+                            IdentifierNode
+                              name: n
+                              line: 10
+                          operator: -
+                          right:
+                            NumberNode
+                              value: 1
+                              line: 10
+                          line: 10
+                      line: 10
+                    AssignmentNode
+                      identifier: result
+                      expression:
+                        CallNode
+                          function: factorial
+                          args:
+                            IdentifierNode
+                              name: temp
+                              line: 11
+                          line: 11
+                      line: 11
+                    ReturnNode
+                      expression:
+                        BinaryOpNode
+                          left:
+                            IdentifierNode
+                              name: n
+                              line: 12
+                          operator: *
+                          right:
+                            IdentifierNode
+                              name: result
+                              line: 12
+                          line: 12
+                      line: 12
+              line: 6
+      line: 4
+    AssignmentNode
+      identifier: resultado1
+      expression:
+        CallNode
+          function: factorial
+          args:
+            NumberNode
+              value: 0
+              line: 15
+          line: 15
+      line: 15
+    PrintNode
+      expression:
+        IdentifierNode
+          name: resultado1
+          line: 16
+      line: 16
+    AssignmentNode
+      identifier: resultado2
+      expression:
+        CallNode
+          function: factorial
+          args:
+            NumberNode
+              value: 1
+              line: 19
+          line: 19
+      line: 19
+    PrintNode
+      expression:
+        IdentifierNode
+          name: resultado2
+          line: 20
+      line: 20
+    AssignmentNode
+      identifier: resultado3
+      expression:
+        CallNode
+          function: factorial
+          args:
+            NumberNode
+              value: 3
+              line: 23
+          line: 23
+      line: 23
+    PrintNode
+      expression:
+        IdentifierNode
+          name: resultado3
+          line: 24
+      line: 24
+    AssignmentNode
+      identifier: resultado4
+      expression:
+        CallNode
+          function: factorial
+          args:
+            NumberNode
+              value: 5
+              line: 27
+          line: 27
+      line: 27
+    PrintNode
+      expression:
+        IdentifierNode
+          name: resultado4
+          line: 28
+      line: 28

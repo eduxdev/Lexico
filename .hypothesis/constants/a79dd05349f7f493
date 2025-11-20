@@ -1,0 +1,4 @@
+# file: C:\Users\HUAWEI\Desktop\Lexico\machine_code_generator.py
+# hypothesis_version: 6.148.2
+
+['    .globl main', '    B _exit', '    MOV R0, #0', '.', '.data', '.text', 'ADD', 'ASSIGN', 'CALL', 'DIV', 'EQ', 'GE', 'GOTO', 'GT', 'GTE', 'IF_FALSE', 'LABEL', 'LE', 'LIST_APPEND', 'LIST_CREATE', 'LIST_GET', 'LT', 'LTE', 'MOD', 'MUL', 'NE', 'NEG', 'NEQ', 'PRINT', 'R0', 'R1', 'R2', 'R3', 'R4', 'R5', 'R6', 'R7', 'SUB', '_', 'len', 'main:', 't']

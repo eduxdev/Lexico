@@ -1,0 +1,239 @@
+ABSTRACT SYNTAX TREE (AST)
+====================================================================================================
+
+ProgramNode
+  statements:
+    AssignmentNode
+      identifier: nombre
+      expression:
+        StringNode
+          value: Python
+          line: 5
+      line: 5
+    AssignmentNode
+      identifier: apellido
+      expression:
+        StringNode
+          value: Compiler
+          line: 6
+      line: 6
+    AssignmentNode
+      identifier: len_nombre
+      expression:
+        CallNode
+          function: len
+          args:
+            IdentifierNode
+              name: nombre
+              line: 9
+          line: 9
+      line: 9
+    AssignmentNode
+      identifier: len_apellido
+      expression:
+        CallNode
+          function: len
+          args:
+            IdentifierNode
+              name: apellido
+              line: 10
+          line: 10
+      line: 10
+    PrintNode
+      expression:
+        IdentifierNode
+          name: len_nombre
+          line: 11
+      line: 11
+    PrintNode
+      expression:
+        IdentifierNode
+          name: len_apellido
+          line: 12
+      line: 12
+    IfNode
+      condition:
+        BinaryOpNode
+          left:
+            IdentifierNode
+              name: len_nombre
+              line: 15
+          operator: >
+          right:
+            NumberNode
+              value: 5
+              line: 15
+          line: 15
+      then_block:
+        BlockNode
+          statements:
+            PrintNode
+              expression:
+                NumberNode
+                  value: 1
+                  line: 16
+              line: 16
+      else_block:
+        BlockNode
+          statements:
+            PrintNode
+              expression:
+                NumberNode
+                  value: 0
+                  line: 18
+              line: 18
+      line: 15
+    IfNode
+      condition:
+        BinaryOpNode
+          left:
+            IdentifierNode
+              name: len_apellido
+              line: 21
+          operator: >
+          right:
+            IdentifierNode
+              name: len_nombre
+              line: 21
+          line: 21
+      then_block:
+        BlockNode
+          statements:
+            PrintNode
+              expression:
+                NumberNode
+                  value: 1
+                  line: 22
+              line: 22
+      else_block:
+        BlockNode
+          statements:
+            PrintNode
+              expression:
+                NumberNode
+                  value: 0
+                  line: 24
+              line: 24
+      line: 21
+    AssignmentNode
+      identifier: palabras
+      expression:
+        ListNode
+          line: 27
+      line: 27
+    CallNode
+      function: palabras.append
+      args:
+        IdentifierNode
+          name: nombre
+          line: 28
+      line: 28
+    CallNode
+      function: palabras.append
+      args:
+        IdentifierNode
+          name: apellido
+          line: 29
+      line: 29
+    PrintNode
+      expression:
+        CallNode
+          function: len
+          args:
+            IdentifierNode
+              name: palabras
+              line: 30
+          line: 30
+      line: 30
+    AssignmentNode
+      identifier: saludo
+      expression:
+        StringNode
+          value: Hola
+          line: 33
+      line: 33
+    AssignmentNode
+      identifier: len_saludo
+      expression:
+        CallNode
+          function: len
+          args:
+            IdentifierNode
+              name: saludo
+              line: 34
+          line: 34
+      line: 34
+    PrintNode
+      expression:
+        IdentifierNode
+          name: len_saludo
+          line: 35
+      line: 35
+    IfNode
+      condition:
+        BinaryOpNode
+          left:
+            IdentifierNode
+              name: nombre
+              line: 38
+          operator: ==
+          right:
+            StringNode
+              value: Python
+              line: 38
+          line: 38
+      then_block:
+        BlockNode
+          statements:
+            PrintNode
+              expression:
+                NumberNode
+                  value: 1
+                  line: 39
+              line: 39
+      else_block:
+        BlockNode
+          statements:
+            PrintNode
+              expression:
+                NumberNode
+                  value: 0
+                  line: 41
+              line: 41
+      line: 38
+    IfNode
+      condition:
+        BinaryOpNode
+          left:
+            CallNode
+              function: len
+              args:
+                IdentifierNode
+                  name: palabras
+                  line: 44
+              line: 44
+          operator: ==
+          right:
+            NumberNode
+              value: 2
+              line: 44
+          line: 44
+      then_block:
+        BlockNode
+          statements:
+            PrintNode
+              expression:
+                NumberNode
+                  value: 1
+                  line: 45
+              line: 45
+      else_block:
+        BlockNode
+          statements:
+            PrintNode
+              expression:
+                NumberNode
+                  value: 0
+                  line: 47
+              line: 47
+      line: 44

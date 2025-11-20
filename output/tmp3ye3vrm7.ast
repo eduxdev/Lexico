@@ -1,0 +1,27 @@
+ABSTRACT SYNTAX TREE (AST)
+====================================================================================================
+
+ProgramNode
+  statements:
+    AssignmentNode
+      identifier: x
+      expression:
+        NumberNode
+          value: 5
+          line: 1
+      line: 1
+    AssignmentNode
+      identifier: y
+      expression:
+        BinaryOpNode
+          left:
+            IdentifierNode
+              name: undefined_var
+              line: 2
+          operator: +
+          right:
+            NumberNode
+              value: 10
+              line: 2
+          line: 2
+      line: 2

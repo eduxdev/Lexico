@@ -1,0 +1,4 @@
+# file: C:\Users\HUAWEI\Desktop\Lexico\tac_optimizer.py
+# hypothesis_version: 6.148.2
+
+[100, '"', '.', '0', '1', ':', '=', 'ADD', 'ASSIGN', 'CALL', 'DIV', 'EQ', 'GOTO', 'GT', 'GTE', 'IF_FALSE', 'LABEL', 'LIST_APPEND', 'LIST_CREATE', 'LIST_GET', 'LIST_SET', 'LT', 'LTE', 'MOD', 'MUL', 'NEG', 'NEQ', 'PRINT', 'SUB', '_', 't']

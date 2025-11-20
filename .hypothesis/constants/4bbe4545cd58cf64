@@ -1,0 +1,4 @@
+# file: C:\Users\HUAWEI\Desktop\Lexico\python_compiler.py
+# hypothesis_version: 6.148.2
+
+['\n#', '!', '!=', '"', '"\'', '#', '%', "'", '(', ')', '*', '**', '+', ',', '-', '.', '/', ':', '<', '<=', '=', '==', '>', '>=', 'False', 'None', 'String sin cerrar', 'True', '[', '\\', '\\n', ']', '_', 'append', 'break', 'continue', 'def', 'del', 'elif', 'else', 'except', 'float', 'for', 'global', 'if', 'in', 'input', 'int', 'len', 'n', 'print', 'r', 'range', 'return', 'str', 't', 'try', 'while', '{', '}']

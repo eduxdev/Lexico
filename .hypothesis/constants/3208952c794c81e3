@@ -1,0 +1,4 @@
+# file: C:\Users\HUAWEI\Desktop\Lexico\tac_generator.py
+# hypothesis_version: 6.148.2
+
+['!=', '%', '*', '+', ', ', '-', '.', '/', '0', '1', '<', '<=', '==', '>', '>=', 'ADD', 'ASSIGN', 'BREAK', 'CALL', 'CONTINUE', 'DEL', 'DICT_CREATE', 'DICT_SET', 'DIV', 'EQ', 'GOTO', 'GT', 'GTE', 'IF_FALSE', 'LABEL', 'LIST_APPEND', 'LIST_CREATE', 'LIST_GET', 'LIST_SET', 'LT', 'LTE', 'MOD', 'MUL', 'NEG', 'NEQ', 'PRINT', 'RETURN', 'SUB', 'UNKNOWN', 'append', 'break', 'continue', 'len', 'range', 'return']

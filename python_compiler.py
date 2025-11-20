@@ -821,7 +821,12 @@ class Parser:
                 return IndexNode(IdentifierNode(token.value, token.line), index_expr, token.line)
             elif self.current_token.type == TokenType.DOT:
                 self.advance()
-                method = self.expect(TokenType.IDENTIFIER).value
+                # Allow keywords as method names (e.g., append, len)
+                if self.current_token.type in [TokenType.IDENTIFIER, TokenType.APPEND, TokenType.LEN, TokenType.PRINT]:
+                    method = self.current_token.value
+                    self.advance()
+                else:
+                    self.error(f"Se esperaba nombre de método, se encontró {self.current_token.type.name}")
                 self.expect(TokenType.LPAREN)
                 args = []
                 if self.current_token.type != TokenType.RPAREN:

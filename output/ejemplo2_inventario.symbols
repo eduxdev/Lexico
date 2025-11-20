@@ -1,0 +1,15 @@
+TABLA DE SÍMBOLOS
+====================================================================================================
+
+Variable             Tipo            Inicializada    Línea     
+----------------------------------------------------------------------------------------------------
+producto1            int             Sí              22        
+producto2            int             Sí              6         
+producto3            int             Sí              7         
+precio1              int             Sí              9         
+precio2              int             Sí              10        
+precio3              int             Sí              11        
+total_productos      int             Sí              14        
+valor_total          int             Sí              18        
+suma_precios         int             Sí              26        
+promedio             float           Sí              27        

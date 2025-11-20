@@ -1,0 +1,12 @@
+TABLA DE SÍMBOLOS
+====================================================================================================
+
+Variable             Tipo            Inicializada    Línea     
+----------------------------------------------------------------------------------------------------
+nombre               str             Sí              5         
+apellido             str             Sí              6         
+len_nombre           int             Sí              9         
+len_apellido         int             Sí              10        
+palabras             list            Sí              27        
+saludo               str             Sí              33        
+len_saludo           int             Sí              34        

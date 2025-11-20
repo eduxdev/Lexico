@@ -1,0 +1,4 @@
+# file: C:\Users\HUAWEI\Desktop\Lexico\semantic_analyzer.py
+# hypothesis_version: 6.148.2
+
+[100, '!=', '%', '*', '+', '-', '/', '<', '<=', '=', '==', '>', '>=', 'ANÁLISIS SEMÁNTICO\n', 'TABLA DE SÍMBOLOS\n', 'bool', 'dict', 'float', 'global', 'initialized', 'input', 'int', 'len', 'line', 'list', 'range', 'str', 'type', 'unknown']

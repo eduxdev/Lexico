@@ -1,0 +1,194 @@
+ABSTRACT SYNTAX TREE (AST)
+====================================================================================================
+
+ProgramNode
+  statements:
+    AssignmentNode
+      identifier: producto1
+      expression:
+        NumberNode
+          value: 10
+          line: 5
+      line: 5
+    AssignmentNode
+      identifier: producto2
+      expression:
+        NumberNode
+          value: 15
+          line: 6
+      line: 6
+    AssignmentNode
+      identifier: producto3
+      expression:
+        NumberNode
+          value: 20
+          line: 7
+      line: 7
+    AssignmentNode
+      identifier: precio1
+      expression:
+        NumberNode
+          value: 100
+          line: 9
+      line: 9
+    AssignmentNode
+      identifier: precio2
+      expression:
+        NumberNode
+          value: 150
+          line: 10
+      line: 10
+    AssignmentNode
+      identifier: precio3
+      expression:
+        NumberNode
+          value: 200
+          line: 11
+      line: 11
+    AssignmentNode
+      identifier: total_productos
+      expression:
+        BinaryOpNode
+          left:
+            BinaryOpNode
+              left:
+                IdentifierNode
+                  name: producto1
+                  line: 14
+              operator: +
+              right:
+                IdentifierNode
+                  name: producto2
+                  line: 14
+              line: 14
+          operator: +
+          right:
+            IdentifierNode
+              name: producto3
+              line: 14
+          line: 14
+      line: 14
+    PrintNode
+      expression:
+        IdentifierNode
+          name: total_productos
+          line: 15
+      line: 15
+    AssignmentNode
+      identifier: valor_total
+      expression:
+        BinaryOpNode
+          left:
+            BinaryOpNode
+              left:
+                BinaryOpNode
+                  left:
+                    IdentifierNode
+                      name: producto1
+                      line: 18
+                  operator: *
+                  right:
+                    IdentifierNode
+                      name: precio1
+                      line: 18
+                  line: 18
+              operator: +
+              right:
+                BinaryOpNode
+                  left:
+                    IdentifierNode
+                      name: producto2
+                      line: 18
+                  operator: *
+                  right:
+                    IdentifierNode
+                      name: precio2
+                      line: 18
+                  line: 18
+              line: 18
+          operator: +
+          right:
+            BinaryOpNode
+              left:
+                IdentifierNode
+                  name: producto3
+                  line: 18
+              operator: *
+              right:
+                IdentifierNode
+                  name: precio3
+                  line: 18
+              line: 18
+          line: 18
+      line: 18
+    PrintNode
+      expression:
+        IdentifierNode
+          name: valor_total
+          line: 19
+      line: 19
+    AssignmentNode
+      identifier: producto1
+      expression:
+        BinaryOpNode
+          left:
+            IdentifierNode
+              name: producto1
+              line: 22
+          operator: -
+          right:
+            NumberNode
+              value: 5
+              line: 22
+          line: 22
+      line: 22
+    PrintNode
+      expression:
+        IdentifierNode
+          name: producto1
+          line: 23
+      line: 23
+    AssignmentNode
+      identifier: suma_precios
+      expression:
+        BinaryOpNode
+          left:
+            BinaryOpNode
+              left:
+                IdentifierNode
+                  name: precio1
+                  line: 26
+              operator: +
+              right:
+                IdentifierNode
+                  name: precio2
+                  line: 26
+              line: 26
+          operator: +
+          right:
+            IdentifierNode
+              name: precio3
+              line: 26
+          line: 26
+      line: 26
+    AssignmentNode
+      identifier: promedio
+      expression:
+        BinaryOpNode
+          left:
+            IdentifierNode
+              name: suma_precios
+              line: 27
+          operator: /
+          right:
+            NumberNode
+              value: 3
+              line: 27
+          line: 27
+      line: 27
+    PrintNode
+      expression:
+        IdentifierNode
+          name: promedio
+          line: 28
+      line: 28

@@ -5,13 +5,17 @@ Con fondo azul gradiente y todas las fases de compilación
 
 import tkinter as tk
 from tkinter import ttk, scrolledtext, messagebox, filedialog, font as tkfont
+import sys
+import importlib
+
 from python_compiler import *
 from semantic_analyzer import SemanticAnalyzer
 from tac_generator import TACGenerator
 from tac_optimizer import TACOptimizer
-from tac_interpreter import TACInterpreter
 from machine_code_generator import MachineCodeGenerator
 from reglas_semanticas import REGLAS_SEMANTICAS, obtener_reglas_por_fase, obtener_nombre_fase
+
+# NO importar TACInterpreter aquí - lo importaremos dinámicamente cuando lo necesitemos
 
 
 # Colores Dark Mode moderno - Tema Océano Nocturno
@@ -204,6 +208,10 @@ class PythonCompilerIDE:
             ("🔢 Fibonacci", "fibonacci"),
             ("🔍 Búsqueda", "busqueda"),
             ("📊 Listas", "listas"),
+            ("👥 Estudiantes", "estudiantes"),
+            ("📦 Inventario", "inventario"),
+            ("📝 Cadenas", "cadenas"),
+            ("🔄 Factorial", "factorial"),
             ("⚠️ Con Errores", "errores")
         ]
         
@@ -588,6 +596,13 @@ class PythonCompilerIDE:
             self.display_machine_code()
             
             # Fase 7: Ejecución
+            # Importar y recargar el intérprete dinámicamente para asegurar la versión más reciente
+            if 'tac_interpreter' in sys.modules:
+                del sys.modules['tac_interpreter']
+            
+            import tac_interpreter
+            from tac_interpreter import TACInterpreter
+            
             interpreter = TACInterpreter()
             self.execution_output = interpreter.interpret(self.optimized_tac)
             self.display_execution()
@@ -774,6 +789,14 @@ class PythonCompilerIDE:
             self.load_search_example()
         elif example == "listas":
             self.load_list_processing_example()
+        elif example == "estudiantes":
+            self.load_estudiantes_example()
+        elif example == "inventario":
+            self.load_inventario_example()
+        elif example == "cadenas":
+            self.load_cadenas_example()
+        elif example == "factorial":
+            self.load_factorial_example()
         elif example == "errores":
             self.load_error_example()
     
@@ -855,6 +878,58 @@ print(promedio)
         self.code_editor.insert('1.0', code)
         self.update_line_numbers()
         self.status_bar.config(text="Ejemplo de procesamiento cargado", bg=COLORS['accent_green'], fg='#000000')
+    
+    def load_estudiantes_example(self):
+        """Carga el ejemplo de gestión de estudiantes"""
+        try:
+            with open('ejemplos/ejemplo1_estudiantes.py', 'r', encoding='utf-8') as f:
+                code = f.read()
+            self.code_editor.delete('1.0', 'end')
+            self.code_editor.insert('1.0', code)
+            self.update_line_numbers()
+            self.status_bar.config(text="✅ Ejemplo 1: Gestión de Estudiantes cargado", bg=COLORS['accent_green'], fg='#000000')
+        except FileNotFoundError:
+            messagebox.showerror("Error", "No se encontró el archivo ejemplos/ejemplo1_estudiantes.py")
+            self.status_bar.config(text="❌ Error al cargar ejemplo", bg=COLORS['accent_red'])
+    
+    def load_inventario_example(self):
+        """Carga el ejemplo de sistema de inventario"""
+        try:
+            with open('ejemplos/ejemplo2_inventario.py', 'r', encoding='utf-8') as f:
+                code = f.read()
+            self.code_editor.delete('1.0', 'end')
+            self.code_editor.insert('1.0', code)
+            self.update_line_numbers()
+            self.status_bar.config(text="✅ Ejemplo 2: Sistema de Inventario cargado", bg=COLORS['accent_green'], fg='#000000')
+        except FileNotFoundError:
+            messagebox.showerror("Error", "No se encontró el archivo ejemplos/ejemplo2_inventario.py")
+            self.status_bar.config(text="❌ Error al cargar ejemplo", bg=COLORS['accent_red'])
+    
+    def load_cadenas_example(self):
+        """Carga el ejemplo de procesamiento de cadenas"""
+        try:
+            with open('ejemplos/ejemplo3_cadenas.py', 'r', encoding='utf-8') as f:
+                code = f.read()
+            self.code_editor.delete('1.0', 'end')
+            self.code_editor.insert('1.0', code)
+            self.update_line_numbers()
+            self.status_bar.config(text="✅ Ejemplo 3: Procesamiento de Cadenas cargado", bg=COLORS['accent_green'], fg='#000000')
+        except FileNotFoundError:
+            messagebox.showerror("Error", "No se encontró el archivo ejemplos/ejemplo3_cadenas.py")
+            self.status_bar.config(text="❌ Error al cargar ejemplo", bg=COLORS['accent_red'])
+    
+    def load_factorial_example(self):
+        """Carga el ejemplo de factorial recursivo"""
+        try:
+            with open('ejemplos/ejemplo4_factorial.py', 'r', encoding='utf-8') as f:
+                code = f.read()
+            self.code_editor.delete('1.0', 'end')
+            self.code_editor.insert('1.0', code)
+            self.update_line_numbers()
+            self.status_bar.config(text="✅ Ejemplo 4: Factorial Recursivo cargado", bg=COLORS['accent_green'], fg='#000000')
+        except FileNotFoundError:
+            messagebox.showerror("Error", "No se encontró el archivo ejemplos/ejemplo4_factorial.py")
+            self.status_bar.config(text="❌ Error al cargar ejemplo", bg=COLORS['accent_red'])
     
     def load_error_example(self):
         """Carga el ejemplo con errores"""
@@ -969,7 +1044,7 @@ Palabras Reservadas: def, return, if, elif, else, while, for, in, range,
 
 Identificadores: [a-zA-Z_][a-zA-Z0-9_]*
 
-Números: [0-9]+(\.[0-9]+)?
+Números: [0-9]+(\\.[0-9]+)?
 
 Strings: "[^"]*" | '[^']*'
 

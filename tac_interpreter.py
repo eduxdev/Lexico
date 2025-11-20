@@ -14,6 +14,8 @@ class TACInterpreter:
         self.output = []
         self.pc = 0
         self.labels = {}
+        self.call_stack = []
+        self.function_params = []
     
     def interpret(self, instructions):
         """Ejecuta las instrucciones TAC"""
@@ -21,10 +23,28 @@ class TACInterpreter:
         self.output = []
         self.pc = 0
         self.labels = {}
+        self.call_stack = []
+        self.function_params = []
         
+        # Primera pasada: identificar etiquetas y funciones
         for i, instr in enumerate(instructions):
             if instr.op == 'LABEL':
                 self.labels[instr.arg1] = i
+        
+        # Encontrar el inicio del código principal (después de las definiciones de función)
+        # Buscar la última instrucción RETURN que no tiene argumentos (fin de función)
+        main_start = 0
+        for i, instr in enumerate(instructions):
+            if instr.op == 'LABEL' and instr.arg1.startswith('func_'):
+                # Encontrar el final de esta función (RETURN sin argumentos)
+                for j in range(i + 1, len(instructions)):
+                    if instructions[j].op == 'RETURN' and instructions[j].arg1 is None:
+                        main_start = j + 1
+                        break
+                break  # Solo procesamos la primera función
+        
+        # Comenzar desde el código principal
+        self.pc = main_start
         
         while self.pc < len(instructions):
             instr = instructions[self.pc]
@@ -194,13 +214,16 @@ class TACInterpreter:
                 raise Exception(f"Error de ejecución: {instr.arg1} no es un diccionario")
         
         elif instr.op == 'CALL':
-            if instr.arg1 == 'len':
-                list_var = self.get_value(instr.arg2)
-                if isinstance(list_var, list):
-                    self.variables[instr.result] = len(list_var)
+            func_name = instr.arg1
+            
+            # Verificar si es una función built-in
+            if func_name == 'len':
+                arg_value = self.get_value(instr.arg2)
+                if isinstance(arg_value, (list, str, dict)):
+                    self.variables[instr.result] = len(arg_value)
                 else:
-                    raise Exception(f"Error de ejecución: len() requiere una lista")
-            elif instr.arg1 == 'input':
+                    raise Exception(f"Error de ejecución: len() requiere una lista, string o diccionario")
+            elif func_name == 'input':
                 prompt = self.get_value(instr.arg2) if instr.arg2 else ""
                 if prompt:
                     user_input = input(prompt)
@@ -225,14 +248,45 @@ class TACInterpreter:
                         raise Exception(f"Error de ejecución: float() requiere un valor convertible a float")
                 else:
                     raise Exception(f"Error de ejecución: float() requiere un argumento")
-            elif instr.arg1 == 'str':
+            elif func_name == 'str':
                 arg_value = self.get_value(instr.arg2) if instr.arg2 else None
                 if arg_value is not None:
                     self.variables[instr.result] = str(arg_value)
                 else:
                     raise Exception(f"Error de ejecución: str() requiere un argumento")
             else:
-                raise Exception(f"Error de ejecución: Función '{instr.arg1}' no implementada")
+                # Función definida por el usuario
+                func_label = f"func_{func_name}"
+                if func_label in self.labels:
+                    # Guardar contexto actual
+                    saved_vars = self.variables.copy()
+                    saved_pc = self.pc
+                    
+                    self.call_stack.append({
+                        'return_pc': saved_pc,
+                        'variables': saved_vars,
+                        'result_var': instr.result
+                    })
+                    
+                    # Obtener argumentos (pueden estar separados por comas)
+                    if instr.arg2:
+                        # Parsear argumentos (pueden ser "temp" o "0, 1" etc)
+                        args_str = str(instr.arg2)
+                        if ',' in args_str:
+                            args = [arg.strip() for arg in args_str.split(',')]
+                        else:
+                            args = [args_str]
+                        
+                        # Evaluar cada argumento y asignarlo a parámetros
+                        param_names = ['n', 'x', 'y', 'z', 'a', 'b', 'c']
+                        for i, arg in enumerate(args):
+                            if i < len(param_names):
+                                self.variables[param_names[i]] = self.get_value(arg)
+                    
+                    # Saltar a la función
+                    self.pc = self.labels[func_label]
+                else:
+                    raise Exception(f"Error de ejecución: Función '{func_name}' no implementada")
         
         elif instr.op == 'DEL':
             if instr.arg2:
@@ -257,6 +311,66 @@ class TACInterpreter:
                     del self.variables[instr.arg1]
                 else:
                     raise Exception(f"Error de ejecución: Variable '{instr.arg1}' no existe")
+        
+        elif instr.op == 'PARAM':
+            # Guardar parámetro para la próxima llamada a función
+            value = self.get_value(instr.arg1)
+            self.function_params.append(value)
+        
+        elif instr.op == 'FUNCTION_CALL':
+            # Llamada a función definida por el usuario
+            func_name = instr.arg1
+            num_params = int(instr.arg2) if instr.arg2 else 0
+            
+            # Guardar contexto actual
+            saved_vars = self.variables.copy()
+            self.call_stack.append({
+                'return_pc': self.pc,
+                'variables': saved_vars,
+                'result_var': instr.result
+            })
+            
+            # Asignar parámetros a variables locales
+            # Los parámetros se pasan en orden inverso (último en entrar, primero en salir)
+            params = []
+            for _ in range(num_params):
+                if self.function_params:
+                    params.insert(0, self.function_params.pop())
+            
+            # Buscar la función y sus parámetros
+            func_label = f"func_{func_name}"
+            if func_label in self.labels:
+                # Saltar a la función
+                self.pc = self.labels[func_label]
+                
+                # Asignar parámetros (asumiendo que la función espera 'n', 'x', etc.)
+                # Por simplicidad, usamos nombres genéricos
+                param_names = ['n', 'x', 'y', 'z']  # Nombres comunes de parámetros
+                for i, param_value in enumerate(params):
+                    if i < len(param_names):
+                        self.variables[param_names[i]] = param_value
+            else:
+                raise Exception(f"Error de ejecución: Función '{func_name}' no encontrada")
+        
+        elif instr.op == 'RETURN':
+            # Retornar de una función
+            if self.call_stack:
+                # IMPORTANTE: Evaluar el valor de retorno ANTES de restaurar el contexto
+                # para que las variables temporales estén disponibles
+                return_value = self.get_value(instr.arg1) if instr.arg1 else None
+                
+                context = self.call_stack.pop()
+                
+                # Restaurar contexto
+                self.variables = context['variables']
+                self.pc = context['return_pc']
+                
+                # Guardar valor de retorno
+                if context['result_var'] and return_value is not None:
+                    self.variables[context['result_var']] = return_value
+            else:
+                # Return en el programa principal - terminar ejecución
+                self.pc = len(self.variables) + 1000  # Forzar salida
         
         elif instr.op == 'BREAK':
             pass
